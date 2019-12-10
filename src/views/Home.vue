@@ -37,15 +37,11 @@
 
 <script>
 export default {
-  data () {
-    return {
-      meetups: [
-        { imageUrl: 'https://cdn.britannica.com/s:700x450/26/84526-050-45452C37/Gateway-monument-India-entrance-Mumbai-Harbour-coast.jpg', id: 'qwer12', title: 'Meetup in Nariman point' },
-        { imageUrl: 'https://cdn.britannica.com/s:700x450/37/189837-050-F0AF383E/New-Delhi-India-War-Memorial-arch-Sir.jpg', id: 'qwer45', title: 'Meetup in Delhi' }
-      ]
+  computed: {
+    meetups () {
+      return this.$store.getters.featuredMeetups
     }
   },
-
   methods: {
     onLoadMeetup (id) {
       this.$router.push('/meetups/' + id)
