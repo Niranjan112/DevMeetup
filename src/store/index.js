@@ -10,7 +10,7 @@ export default new Vuex.Store({
         imageUrl: 'https://cdn.britannica.com/s:700x450/26/84526-050-45452C37/Gateway-monument-India-entrance-Mumbai-Harbour-coast.jpg',
         id: 'qwer12',
         title: 'Meetup in Nariman point',
-        date: '2017-07-17',
+        date: new Date(),
         location: 'Mumbai',
         description: 'boom boom'
       },
@@ -18,7 +18,7 @@ export default new Vuex.Store({
         imageUrl: 'https://cdn.britannica.com/s:700x450/37/189837-050-F0AF383E/New-Delhi-India-War-Memorial-arch-Sir.jpg',
         id: 'qwer45',
         title: 'Meetup in Delhi',
-        date: '2017-07-19',
+        date: new Date(),
         location: 'Delhi',
         description: 'boom boom'
       }

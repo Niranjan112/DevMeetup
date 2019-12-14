@@ -21,7 +21,7 @@
               >
               </v-img>
 
-              <v-card-subtitle class="pb-0">{{ meetup.date }} - {{ meetup.location}}</v-card-subtitle>
+              <v-card-subtitle class="pb-0">{{ meetup.date | date }} - {{ meetup.location}}</v-card-subtitle>
 
               <v-card-text class="text--primary subtitle-1">
                 <div>{{ meetup.description }}</div>

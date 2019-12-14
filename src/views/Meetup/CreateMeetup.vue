@@ -16,6 +16,7 @@
                 id="title"
                 v-model="title"
                 color="blue-grey darken-2"
+                outlined
                 required
               ></v-text-field>
 
@@ -25,6 +26,7 @@
                 id="location"
                 v-model="location"
                 color="blue-grey darken-2"
+                outlined
                 required
               ></v-text-field>
 
@@ -34,37 +36,37 @@
                 id="image-url"
                 v-model="imageUrl"
                 color="blue-grey darken-2"
+                outlined
                 required
               ></v-text-field>
 
               <v-img :src="imageUrl" alt="image"></v-img>
-
-              <v-row>
-                <v-col xs="12" sm="6">
-                  <v-date-picker
-                    v-model="date"
-                    color="blue-grey darken-2"
-                  ></v-date-picker>
-                  {{ date }}
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-time-picker
-                        v-model="time"
-                        color="blue-grey darken-2"
-                        ampm-in-title
-                      ></v-time-picker>
-                </v-col>
-              </v-row>
-
+              <v-date-picker
+                v-model="date"
+                full-width
+                :landscape="$vuetify.breakpoint.smAndUp"
+                class="my-4"
+                color="blue-grey darken-2"
+              ></v-date-picker>
+              <v-time-picker
+                v-model="time"
+                :landscape="$vuetify.breakpoint.smAndUp"
+                full-width
+                color="blue-grey darken-2"
+                format="24hr"
+                class="mb-4"
+              ></v-time-picker>
               <v-textarea
                 name="description"
                 label="Description"
                 id="description"
                 v-model="description"
                 color="blue-grey darken-2"
+                clearable
+                auto-grow
+                outlined
                 required
               ></v-textarea>
-
               <div class="text-center">
                 <v-btn
                   class="blue-grey darken-2 white--text"
@@ -72,8 +74,6 @@
                   type="submit"
                   color="blue-grey darken-2"
                 >Create Meetup</v-btn>
-                {{ submittableDateTime }}
-                {{ time }}
               </div>
             </v-col>
           </v-row>
@@ -91,7 +91,7 @@ export default {
       location: '',
       imageUrl: '',
       description: '',
-      datee: new Date(),
+      date: '',
       time: new Date()
     }
   },
@@ -99,13 +99,10 @@ export default {
     formIsValid () {
       return this.title !== '' && this.location !== '' && this.imageUrl !== '' && this.description !== ''
     },
-    date () {
-      return this.datee.toString()
-    },
     submittableDateTime () {
       const date = new Date(this.date)
       if (typeof this.time === 'string') {
-        const hours = this.time.match(/^(\d+)/)[1]
+        let hours = this.time.match(/^(\d+)/)[1]
         const minutes = this.time.match(/:(\d+)/)[1]
         date.setHours(hours)
         date.setMinutes(minutes)
@@ -113,7 +110,6 @@ export default {
         date.setHours(this.time.getHours())
         date.setMinutes(this.time.getMinutes())
       }
-      console.log(date)
       return date
     }
   },
