@@ -21,10 +21,10 @@
               >
               </v-img>
 
-              <v-card-subtitle class="pb-0">{{ meetup.date }}</v-card-subtitle>
+              <v-card-subtitle class="pb-0">{{ meetup.date }} - {{ meetup.location}}</v-card-subtitle>
 
               <v-card-text class="text--primary subtitle-1">
-                <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus dolor molestias nobis quod, impedit perspiciatis laudantium eligendi ipsum fuga sapiente ipsam fugiat laborum deleniti sequi suscipit corporis a debitis doloribus?</div>
+                <div>{{ meetup.description }}</div>
               </v-card-text>
 
               <v-card-actions>

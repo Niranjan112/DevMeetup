@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row v-for="meetup in meetups" :key="meetup.id">
-      <v-col cols="12">
+      <v-col>
         <v-card class="pl-3 pr-3 blue-grey lighten-4">
           <v-row>
             <v-col xs="12" sm="4">
