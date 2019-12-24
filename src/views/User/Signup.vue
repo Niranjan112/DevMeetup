@@ -1,11 +1,16 @@
 <template>
   <v-container>
+    <v-row v-if="error">
+      <v-col cols="12" sm6>
+        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+      </v-col>
+    </v-row>
     <v-row justify="center">
       <v-col cols="12" sm="6">
         <v-card>
           <v-card-text>
             <v-container>
-              <v-form>
+              <v-form @submit.prevent="onSignUp">
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
@@ -36,7 +41,14 @@
                       v-model="confirmPassword"
                       :rules="[rules.comparePasswords]"
                     ></v-text-field>
-                    <v-btn type="submit">Sign Up</v-btn>
+                    <v-btn type="submit" :disabled="loading" :loading="loading">
+                      Sign Up
+                      <template v-slot:loader>
+                        <span class="custom-loader">
+                          <v-icon light>cached</v-icon>
+                        </span>
+                      </template>
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-form>
@@ -56,16 +68,76 @@ export default {
       password: '',
       confirmPassword: '',
       showPassword1: false,
-      showPassword2: true,
+      showPassword2: false,
       rules: {
         comparePasswords: value => value === this.password || 'Password do not match'
       }
     }
   },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    },
+    error () {
+      return this.$store.getters.error
+    },
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
+  watch: {
+    user (value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/')
+      }
+    }
+  },
   methods: {
     onSignUp () {
-      console.log({ email: this.email, password: this.password, confirmPassword: this.confirmPassword })
+      this.$store.dispatch('signUserUp', { email: this.email, password: this.password })
+    },
+    onDismissed () {
+      this.$store.dispatch('clearError')
     }
   }
 }
 </script>
+
+<style>
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
