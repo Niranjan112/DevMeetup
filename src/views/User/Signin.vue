@@ -32,7 +32,7 @@
                       required
                     ></v-text-field>
                     <v-btn type="submit" :disabled="loading" :loading="loading">
-                      Sign Up
+                      Sign In
                       <template v-slot:loader>
                         <span class="custom-loader">
                           <v-icon light>cached</v-icon>
