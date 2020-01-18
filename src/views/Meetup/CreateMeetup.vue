@@ -9,8 +9,9 @@
       <v-col>
         <v-form @submit.prevent="onCreateMeetup">
           <v-row justify="center">
-            <v-col xs="12" sm="6">
+            <v-col cols="12" sm="6">
               <v-text-field
+                prepend-icon="subject"
                 name="title"
                 label="Title"
                 id="title"
@@ -21,6 +22,7 @@
               ></v-text-field>
 
               <v-text-field
+                prepend-icon="location_city"
                 name="location"
                 label="Location"
                 id="location"
@@ -30,17 +32,16 @@
                 required
               ></v-text-field>
 
-              <v-text-field
-                name="imageUrl"
-                label="Image URL"
-                id="image-url"
-                v-model="imageUrl"
-                color="blue-grey darken-2"
-                outlined
-                required
-              ></v-text-field>
+              <v-btn raised dark class="blue-grey darken-2" @click="onPickFile">Upload Image</v-btn>
+              <input
+                type="file"
+                style="display: none"
+                ref="fileInput"
+                accept="image/*"
+                @change="onFilePicked"
+              >
 
-              <v-img :src="imageUrl" alt="image"></v-img>
+              <v-img :src="imageUrl" alt="image" class="mt-2"></v-img>
               <v-date-picker
                 v-model="date"
                 full-width
@@ -57,6 +58,7 @@
                 class="mb-4"
               ></v-time-picker>
               <v-textarea
+                prepend-icon="description"
                 name="description"
                 label="Description"
                 id="description"
@@ -92,7 +94,8 @@ export default {
       imageUrl: '',
       description: '',
       date: '',
-      time: new Date()
+      time: new Date(),
+      image: null
     }
   },
   computed: {
@@ -118,15 +121,34 @@ export default {
       if (!this.formIsValid) {
         return
       }
+      if (!this.image) {
+        return
+      }
       const meetupData = {
         title: this.title,
         location: this.location,
-        imageUrl: this.imageUrl,
+        image: this.image,
         description: this.description,
         date: this.submittableDateTime
       }
       this.$store.dispatch('createMeetup', meetupData)
       this.$router.push('/meetups')
+    },
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const files = event.target.files
+      let filename = files[0].name
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('Please add a valid file')
+      }
+      const fileReader = new FileReader()
+      fileReader.readAsDataURL(files[0])
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      this.image = files[0]
     }
   }
 }

@@ -7,10 +7,12 @@ import vuetify from './plugins/vuetify'
 import DateFilter from './filter/date'
 import * as firebase from 'firebase'
 import AlertCmp from './components/Shared/Alert.vue'
+import EditMeetupDetailsDialog from './components/EditMeetupDetailsDialog.vue'
 
 Vue.config.productionTip = false
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertCmp)
+Vue.component('edit-meetup', EditMeetupDetailsDialog)
 
 new Vue({
   router,
@@ -26,6 +28,11 @@ new Vue({
       storageBucket: 'devmeetup-f132f.appspot.com',
       messagingSenderId: '358639659596',
       appId: '1:358639659596:web:0f67d4cfc3e017dd35a2e9'
+    })
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.dispatch('autoSignIn', user)
+      }
     })
     this.$store.dispatch('loadMeetups')
   }

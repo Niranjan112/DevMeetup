@@ -1,12 +1,29 @@
 <template>
   <v-container>
-      <v-row>
+      <v-row v-if="loading" class="text-center">
+        <v-col xs12>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            :width="7"
+            :size="70"
+            v-if="loading"
+          ></v-progress-circular>
+        </v-col>
+      </v-row>
+      <v-row v-else>
           <v-col cols="12">
             <v-card
               class="mx-auto blue-grey lighten-4"
               max-width="800"
             >
-              <v-card-title class="headline blue-grey--text text--darken-2">{{ meetup.title }}</v-card-title>
+              <v-card-title class="headline blue-grey--text text--darken-2">
+                {{ meetup.title }}
+                <template v-if="userIsCreator">
+                  <v-spacer></v-spacer>
+                  <edit-meetup :meetup="meetup"/>
+                </template>
+              </v-card-title>
               <v-img
                 class="white--text align-end hidden-sm-and-down"
                 height="325px"
@@ -50,6 +67,18 @@ export default {
   computed: {
     meetup () {
       return this.$store.getters.loadedMeetup(this.id)
+    },
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    },
+    userIsCreator () {
+      if (!this.userIsAuthenticated) {
+        return false
+      }
+      return this.$store.getters.user.id === this.meetup.creatorId
+    },
+    loading () {
+      return this.$store.getters.loading
     }
   }
 }
