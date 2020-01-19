@@ -38,7 +38,11 @@
               >
               </v-img>
 
-              <v-card-subtitle class="pb-0">{{ meetup.date | date }} - {{ meetup.location}}</v-card-subtitle>
+              <v-card-subtitle class="pb-0">
+                {{ meetup.date | date }} - {{ meetup.location}}
+                <edit-meetup-date :meetup="meetup" v-if="userIsCreator" />
+                <edit-meetup-time :meetup="meetup" v-if="userIsCreator" />
+              </v-card-subtitle>
 
               <v-card-text class="text--primary subtitle-1">
                 <div>{{ meetup.description }}</div>
