@@ -1,16 +1,17 @@
 <template>
-  <div class="text-center">
-    <v-container>
-      <v-layout row wrap>
-        <v-flex xs12 sm6 class="mt-3">
-          <v-btn large router to="/meetups" dark class="blue darken-2">Explore Meetups</v-btn>
-        </v-flex>
-        <v-flex xs12 sm6 class="mt-3">
-          <v-btn large router to="/meetup/new" dark class="blue darken-2">Organize Meetup</v-btn>
-        </v-flex>
-      </v-layout>
-      <v-layout>
-        <v-flex xs12 class="text-xs-center">
+  <v-container>
+    <v-row align="center">
+      <v-col class="text-center" cols="12" sm="6">
+        <v-btn large router to="/meetups" dark class="blue darken-2">Explore Meetups</v-btn>
+      </v-col>
+      <v-col class="text-center" cols="12" sm="6">
+        <v-btn large router to="/meetup/new" dark class="blue darken-2">Organize Meetup</v-btn>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <div class="text-center">
           <v-progress-circular
             indeterminate
             color="primary"
@@ -18,32 +19,45 @@
             :size="70"
             v-if="loading"
           ></v-progress-circular>
-        </v-flex>
-      </v-layout>
+        </div>
+      </v-col>
+    </v-row>
 
-      <v-layout row wrap class="mt-4" v-if="!loading">
-        <v-flex xs12>
-          <v-carousel style="cursor: pointer">
-            <v-carousel-item
-              v-for="meetup in meetups"
-              :key="meetup.id"
-              :src="meetup.imageUrl"
-              @click="onLoadMeetup(meetup.id)">
-              <div class="title text-center">
-                {{meetup.title}}
-              </div>
-            </v-carousel-item>
-          </v-carousel>
-        </v-flex>
-      </v-layout>
+    <v-row v-if="!loading" justify="center">
+      <v-col cols="12" sm="10">
+        <v-carousel v-if="meetups.length" style="cursor: pointer" show-arrows-on-hover height="425">
+          <v-carousel-item
+            v-for="meetup in meetups"
+            :key="meetup.id"
+            :src="meetup.imageUrl"
+            @click="onLoadMeetup(meetup.id)">
+            <div class="title text-center">
+              {{meetup.title}}
+            </div>
+          </v-carousel-item>
+        </v-carousel>
 
-      <v-layout row wrap class="mt-2">
-        <v-flex xs12 class="text-center">
-          <p>Join our awesome meetup</p>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+        <v-carousel
+          v-else
+          hide-delimiters
+          :show-arrows="false"
+        >
+          <v-carousel-item>
+            <v-sheet color="blue darken-2" height="100%">
+              <v-row
+                align="center"
+                justify="center"
+                class="fill-height"
+              >
+                <div class="display-3">No Meetup available</div>
+              </v-row>
+            </v-sheet>
+          </v-carousel-item>
+
+        </v-carousel>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

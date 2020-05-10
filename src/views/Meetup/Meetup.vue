@@ -50,14 +50,11 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
-                  dark
-                  class="blue-grey darken-2 px-10"
-                  text
-                  large
+                <app-meetup-register-dialog
+                  :meetupId="meetup.id"
+                  v-if="userIsAuthenticated && !userIsCreator"
                 >
-                  Register
-                </v-btn>
+                </app-meetup-register-dialog>
               </v-card-actions>
             </v-card>
           </v-col>

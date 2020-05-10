@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="background: #F5F5F5">
     <v-navigation-drawer app v-model="sideNav" temporary>
       <v-list>
         <v-list-item v-for="item in menuItems" :key="item.title" :to="item.link">
