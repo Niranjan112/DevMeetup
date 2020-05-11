@@ -22,9 +22,9 @@
     </v-navigation-drawer>
 
     <v-app-bar app dark class="blue-grey darken-2">
-      <v-app-bar-nav-icon @click.stop="sideNav = !sideNav" class="hidden-sm-and-up"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="sideNav = !sideNav" class="hidden-sm-and-up" x-large></v-app-bar-nav-icon>
       <router-link to="/" tag="span" style="cursor: pointer">
-        <v-toolbar-title>DevMeetup</v-toolbar-title>
+        <v-toolbar-title class="headline">DevMeetup</v-toolbar-title>
       </router-link>
 
       <v-spacer></v-spacer>

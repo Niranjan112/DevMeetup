@@ -1,26 +1,53 @@
 <template>
   <v-container>
-    <v-row v-if="error">
-      <v-col cols="12" sm6>
+    <v-row v-if="error" justify="center">
+      <v-col cols="12" sm="6">
         <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <v-row align="center" justify="center">
       <v-col cols="12" sm="6">
-        <v-card>
+        <v-card outlined>
+          <v-row>
+            <v-col cols="12">
+              <v-card-title class="justify-center blue-grey--text darken-2">
+                <h2>Sign In</h2>
+              </v-card-title>
+              <v-divider class="blue-grey darken-2 mx-2"></v-divider>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <div justify="center" align="center">
+                <v-img
+                  src="@/assets/signinicon.png"
+                  height="100"
+                  width="100"
+                  justify="center"
+                >
+                </v-img>
+              </div>
+            </v-col>
+          </v-row>
           <v-card-text>
-            <v-container>
-              <v-form @submit.prevent="onSignIn">
+            <v-form @submit.prevent="onSignIn">
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="10" offset="1">
                     <v-text-field
                       name="email"
                       label="Mail"
                       id="email"
                       v-model="email"
                       type="email"
+                      color="blue-grey darken-2"
+                      prepend-icon="email"
+                      outlined
                       required
                     ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="10" offset="1">
                     <v-text-field
                       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="showPassword ? 'text' : 'password'"
@@ -29,9 +56,22 @@
                       label="Password"
                       id="password"
                       v-model="password"
+                      color="blue-grey darken-2"
+                      prepend-icon="vpn_key"
+                      outlined
                       required
                     ></v-text-field>
-                    <v-btn type="submit" :disabled="loading" :loading="loading">
+                  </v-col>
+                </v-row>
+                <v-row class="text-center">
+                  <v-col cols="6" offset="3">
+                    <v-btn
+                      block
+                      type="submit"
+                      :disabled="loading"
+                      :loading="loading"
+                      color="blue-grey darken-2 white--text"
+                    >
                       Sign In
                       <template v-slot:loader>
                         <span class="custom-loader">
@@ -42,7 +82,6 @@
                   </v-col>
                 </v-row>
               </v-form>
-            </v-container>
           </v-card-text>
         </v-card>
       </v-col>
