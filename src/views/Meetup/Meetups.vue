@@ -1,27 +1,24 @@
 <template>
   <v-container>
-    <v-row v-for="meetup in meetups" :key="meetup.id">
-      <v-col>
-        <v-card class="pl-3 pr-3 blue-grey lighten-4">
-          <v-row>
-            <v-col xs="12" sm="4">
-              <v-img
-                height="200px"
-                :src="meetup.imageUrl"
-              >
-              </v-img>
+    <v-row justify="center">
+      <v-col cols="12" :sm="meetups.length > 1 ? 6 : 10" v-for="meetup in meetups" :key="meetup.id">
+        <v-card outlined>
+          <v-img
+            class="white--text"
+            :height="250"
+            :src="meetup.imageUrl"
+          >
+          </v-img>
+          <v-row align="center">
+            <v-col cols="12" lg="7">
+              <v-card-title><h5>{{ meetup.title }}</h5></v-card-title>
+              <v-card-subtitle>{{ meetup.date | date }}</v-card-subtitle>
             </v-col>
-
-            <v-col sm="8">
-              <v-card-title class="blue-grey--text text--darken-2">
-                <div>
-                  <h2>{{ meetup.title }}</h2>
-                  <div>{{ meetup.date | date }}</div>
-                </div>
-              </v-card-title>
-              <v-card-actions class="d-flex align-end">
-                <v-btn text class="blue-grey--text text--darken-2" x-large :to="'/meetups/' + meetup.id">
-                  <v-icon left>arrow_forward</v-icon>View Meetup
+            <v-col cols="12" lg="5">
+              <v-card-actions>
+                <v-spacer class="d-none d-lg-flex"></v-spacer>
+                <v-btn text class="blue-grey--text text--darken-2" fab x-large :to="'/meetups/' + meetup.id">
+                  <v-icon dark>arrow_forward</v-icon>
                 </v-btn>
               </v-card-actions>
             </v-col>

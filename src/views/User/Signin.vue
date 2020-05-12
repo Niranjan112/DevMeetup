@@ -70,7 +70,7 @@
                       type="submit"
                       :disabled="loading"
                       :loading="loading"
-                      color="blue-grey darken-2 white--text"
+                      color="success"
                     >
                       Sign In
                       <template v-slot:loader>

@@ -25,7 +25,7 @@
 
     <v-row v-if="!loading" justify="center">
       <v-col cols="12" sm="10">
-        <v-carousel v-if="meetups.length" style="cursor: pointer" show-arrows-on-hover height="425">
+        <v-carousel v-if="meetups.length" style="cursor: pointer" show-arrows-on-hover cycle interval="4000" height="425">
           <v-carousel-item
             v-for="meetup in meetups"
             :key="meetup.id"
