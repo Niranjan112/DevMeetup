@@ -1,7 +1,7 @@
 <template>
   <v-container>
-      <v-row v-if="loading" class="text-center">
-        <v-col xs12>
+      <v-row v-if="loading">
+        <v-col class="d-flex justify-center">
           <v-progress-circular
             indeterminate
             color="primary"
@@ -12,12 +12,9 @@
         </v-col>
       </v-row>
       <v-row v-else>
-          <v-col cols="12">
-            <v-card
-              class="mx-auto blue-grey lighten-4"
-              max-width="800"
-            >
-              <v-card-title class="headline blue-grey--text text--darken-2">
+          <v-col cols="12" lg="8" offset-lg="2">
+            <v-card>
+              <v-card-title class="display-1">
                 {{ meetup.title }}
                 <template v-if="userIsCreator">
                   <v-spacer></v-spacer>
@@ -25,27 +22,36 @@
                 </template>
               </v-card-title>
               <v-img
-                class="white--text align-end hidden-sm-and-down"
+                class="white--text hidden-sm-and-down"
                 height="325px"
                 :src="meetup.imageUrl"
               >
               </v-img>
 
               <v-img
-                class="white--text align-end hidden-md-and-up"
+                class="white--text hidden-md-and-up"
                 height="200px"
                 :src="meetup.imageUrl"
               >
               </v-img>
 
-              <v-card-subtitle class="pb-0">
-                {{ meetup.date | date }} - {{ meetup.location}}
-                <edit-meetup-date :meetup="meetup" v-if="userIsCreator" />
-                <edit-meetup-time :meetup="meetup" v-if="userIsCreator" />
-              </v-card-subtitle>
+              <v-row>
+                <v-col cols="12" lg="8">
+                  <v-card-subtitle cols="12" class="pb-0">
+                    {{ meetup.date | date }} - {{ meetup.location}}
+                  </v-card-subtitle>
+                </v-col>
+                <v-col cols="12" lg="4" align-self="end" v-if="userIsCreator">
+                  <v-card-actions>
+                    <v-spacer class="d-none d-lg-flex"></v-spacer>
+                    <edit-meetup-date :meetup="meetup" v-if="userIsCreator" />
+                    <edit-meetup-time :meetup="meetup" v-if="userIsCreator" />
+                  </v-card-actions>
+                </v-col>
+              </v-row>
 
-              <v-card-text class="text--primary subtitle-1">
-                <div>{{ meetup.description }}</div>
+              <v-card-text class="title font-weight-regular">
+                {{ meetup.description }}
               </v-card-text>
 
               <v-card-actions>

@@ -19,17 +19,17 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   color="blue-grey darken-2"
-                  text
-                  @click="editDialog = false"
-                >
-                  Close
-                </v-btn>
-                <v-btn
-                  color="blue-grey darken-2"
-                  text
+                  dark
                   @click="onSaveChanges"
                 >
                   Save
+                </v-btn>
+                <v-btn
+                  color="blue-grey darken-2"
+                  dark
+                  @click="editDialog = false"
+                >
+                  Close
                 </v-btn>
               </v-time-picker>
             </v-col>

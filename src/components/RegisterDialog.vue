@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="registerDialog">
+  <v-dialog v-model="registerDialog" width="500">
     <template v-slot:activator="{ on }">
       <v-btn text v-on="on" class="blue-grey darken-2 px-10" dark large>
         {{ userIsRegistered ? 'Unregister' : 'Register' }}

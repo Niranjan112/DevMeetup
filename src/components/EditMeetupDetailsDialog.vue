@@ -1,7 +1,7 @@
 <template>
   <v-dialog max-width="350" persistent v-model="editdialog">
     <template v-slot:activator="{ on }">
-      <v-btn text fab v-on="on" class="blue-grey--text text--darken-2">
+      <v-btn text x-small fab v-on="on" class="blue-grey--text text--darken-2">
         <v-icon>edit</v-icon>
       </v-btn>
     </template>
@@ -35,8 +35,8 @@
               ></v-textarea>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn dark text class="blue-grey darken-2" @click="onSaveChanges">Save Changes</v-btn>
-                <v-btn dark text class="blue-grey darken-2" @click="editdialog = false">Cancel</v-btn>
+                <v-btn dark class="blue-grey darken-2" @click="onSaveChanges">Save Changes</v-btn>
+                <v-btn dark class="blue-grey darken-2" @click="editdialog = false">Cancel</v-btn>
               </v-card-actions>
             </v-col>
           </v-row>

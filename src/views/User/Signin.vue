@@ -10,7 +10,7 @@
         <v-card outlined>
           <v-row>
             <v-col cols="12">
-              <v-card-title class="justify-center blue-grey--text darken-2">
+              <v-card-title class="d-flex justify-center blue-grey--text text--darken-2">
                 <h2>Sign In</h2>
               </v-card-title>
               <v-divider class="blue-grey darken-2 mx-2"></v-divider>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col xs="12" sm="6">
+      <v-col cols="12" sm="6">
         <h2 class="blue-grey--text text--darken-2 text-center">Create a new Meetup</h2>
       </v-col>
     </v-row>
@@ -16,6 +16,7 @@
                 label="Title"
                 id="title"
                 v-model="title"
+                background-color="white"
                 color="blue-grey darken-2"
                 outlined
                 required
@@ -27,6 +28,7 @@
                 label="Location"
                 id="location"
                 v-model="location"
+                background-color="white"
                 color="blue-grey darken-2"
                 outlined
                 required
@@ -63,6 +65,7 @@
                 label="Description"
                 id="description"
                 v-model="description"
+                background-color="white"
                 color="blue-grey darken-2"
                 clearable
                 auto-grow
