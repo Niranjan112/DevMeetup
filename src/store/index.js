@@ -26,7 +26,8 @@ export default new Vuex.Store({
     ],
     user: null,
     loading: false,
-    error: null
+    error: null,
+    messageDialog: false
   },
   mutations: {
     registerUserForMeetup (state, payload) {
@@ -73,6 +74,9 @@ export default new Vuex.Store({
     },
     clearError (state) {
       state.error = null
+    },
+    setMessageDialog (state, payload) {
+      state.messageDialog = payload
     }
   },
   actions: {
@@ -204,12 +208,17 @@ export default new Vuex.Store({
         .then(
           user => {
             commit('setLoading', false)
-            const newUser = {
-              id: user.uid,
-              registeredMeetups: [],
-              fbKeys: {}
-            }
-            commit('setUser', newUser)
+            var curUser = firebase.auth().currentUser
+            curUser.sendEmailVerification().then(() => {
+              console.log(curUser.emailVerified)
+              commit('setMessageDialog', true)
+            })
+            // const newUser = {
+            //   id: user.uid,
+            //   registeredMeetups: [],
+            //   fbKeys: {}
+            // }
+            // commit('setUser', newUser)
           }
         )
         .catch(
@@ -226,13 +235,19 @@ export default new Vuex.Store({
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
-            commit('setLoading', false)
-            const newUser = {
-              id: user.uid,
-              registeredMeetups: [],
-              fbKeys: {}
+            var curUser = firebase.auth().currentUser
+            if (curUser.emailVerified) {
+              commit('setLoading', false)
+              const newUser = {
+                id: user.uid,
+                registeredMeetups: [],
+                fbKeys: {}
+              }
+              commit('setUser', newUser)
+            } else {
+              commit('setLoading', false)
+              commit('setError', new Error('Your account is not verified'))
             }
-            commit('setUser', newUser)
           }
         )
         .catch(
@@ -302,6 +317,9 @@ export default new Vuex.Store({
     },
     error (state) {
       return state.error
+    },
+    messageDialog (state) {
+      return state.messageDialog
     }
   },
   modules: {

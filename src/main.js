@@ -36,7 +36,7 @@ new Vue({
       appId: '1:358639659596:web:0f67d4cfc3e017dd35a2e9'
     })
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (user.emailVerified) {
         this.$store.dispatch('autoSignIn', user)
         this.$store.dispatch('fetchUserData')
       }

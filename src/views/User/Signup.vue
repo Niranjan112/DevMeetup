@@ -30,7 +30,7 @@
             </v-col>
           </v-row>
           <v-card-text>
-            <v-form @submit.prevent="onSignUp">
+            <v-form @submit.prevent="onSignUp" ref="signUpForm">
               <v-row>
                 <v-col cols="10" offset="1">
                   <v-text-field
@@ -41,6 +41,7 @@
                       type="email"
                       color="blue-grey darken-2"
                       prepend-icon="email"
+                      :rules="emailRules"
                       outlined
                       required
                     ></v-text-field>
@@ -58,6 +59,7 @@
                     color="blue-grey darken-2"
                     v-model="password"
                     prepend-icon="vpn_key"
+                    :rules="[rules.requirePassword]"
                     outlined
                     required
                   ></v-text-field>
@@ -73,7 +75,7 @@
                     label="Confirm Password"
                     id="confirmPassword"
                     v-model="confirmPassword"
-                    :rules="[rules.comparePasswords]"
+                    :rules="[rules.comparePasswords, rules.requirePassword]"
                     color="blue-grey darken-2"
                     prepend-icon="vpn_key"
                     outlined
@@ -103,6 +105,31 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog
+      v-model="emailVerificationDialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">Email Verification</v-card-title>
+
+        <v-card-text>
+          A link has been sent to your email address.
+           Kindly click on link to verify your email address and come back here to Sign in
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="onOk()"
+          >
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -115,9 +142,15 @@ export default {
       confirmPassword: '',
       showPassword1: false,
       showPassword2: false,
+      emailVerificationDialog: false,
       rules: {
-        comparePasswords: value => value === this.password || 'Password do not match'
-      }
+        comparePasswords: value => value === this.password || 'Password do not match',
+        requirePassword: value => !!value || 'Password is required'
+      },
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+      ]
     }
   },
   computed: {
@@ -129,6 +162,9 @@ export default {
     },
     loading () {
       return this.$store.getters.loading
+    },
+    messageDialog () {
+      return this.$store.getters.messageDialog
     }
   },
   watch: {
@@ -136,14 +172,26 @@ export default {
       if (value !== null && value !== undefined) {
         this.$router.push('/')
       }
+    },
+    messageDialog (value) {
+      console.log(value)
+      this.emailVerificationDialog = value
     }
   },
   methods: {
     onSignUp () {
-      this.$store.dispatch('signUserUp', { email: this.email, password: this.password })
+      if (this.$refs.signUpForm.validate()) {
+        this.$store.dispatch('signUserUp', { email: this.email, password: this.password })
+      }
     },
     onDismissed () {
       this.$store.dispatch('clearError')
+    },
+    onOk () {
+      this.$refs.signUpForm.reset()
+      this.emailVerificationDialog = false
+      this.$store.state.messageDialog = false
+      this.$router.push('/signin')
     }
   }
 }
