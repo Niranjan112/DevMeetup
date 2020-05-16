@@ -41,6 +41,7 @@
                       type="email"
                       color="blue-grey darken-2"
                       prepend-icon="email"
+                      :rules="emailRules"
                       outlined
                       required
                     ></v-text-field>
@@ -58,6 +59,7 @@
                       v-model="password"
                       color="blue-grey darken-2"
                       prepend-icon="vpn_key"
+                      :rules="[v => !!v || 'Password is required']"
                       outlined
                       required
                     ></v-text-field>
@@ -95,7 +97,11 @@ export default {
     return {
       email: '',
       password: '',
-      showPassword: false
+      showPassword: false,
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+      ]
     }
   },
   computed: {
